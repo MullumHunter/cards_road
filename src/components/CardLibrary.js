@@ -8,6 +8,7 @@ const initialcardsData = [
 ];
 function CardLibrary() {
     const[cards, setCards] = useState(initialcardsData);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const  sortCards = (order) => {
         const sorted = [...cards].sort((a, b) => {
@@ -18,17 +19,32 @@ function CardLibrary() {
         setCards(sorted);
     };
 
+    const filteredCards = cards.filter((card) =>
+        card.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <div>
             <h2>Список карт</h2>
+
+            <input
+                type="text"
+                placeholder="Поиск по названию..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+            />
 
             <button onClick={() => sortCards("asc")}>Сортировать A-Z</button>
             <button onClick={() => sortCards("desc")}>Сортировать Z-А</button>
 
             <div className="card-container">
-                {cards.map((card) => (
-                    <Card key={card.id} title={card.title} description={card.description}/>
-                ))}
+                {filteredCards.length > 0 ?(
+                    filteredCards.map((card) => (
+                        <Card key={card.id} title={card.title} description={card.description}/>
+                    ))
+                ) : (
+                    <p>Карты не найдены</p>
+                )}
             </div>
         </div>
     );
