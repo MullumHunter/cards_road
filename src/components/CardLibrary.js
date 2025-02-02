@@ -1,32 +1,47 @@
 import React, { useState } from "react";
 import Card from "./Card";
 
-const initialcardsData = [
-    { id: 1, title: "Рыцарь", description: "Храбрый воин в доспехах"},
-    { id: 2, title: "Маг", description: "Мастер магии и чар"},
-    { id: 3, title: "Разбойник", description: "Теневой мастер ловкости"},
+const initialCardsData = [
+    { id: 1, title: "Рыцарь", description: "Храбрый воин в доспехах" },
+    { id: 2, title: "Маг", description: "Мастер магии и чар" },
+    { id: 3, title: "Разбойник", description: "Теневой мастер ловкости" },
 ];
+
 function CardLibrary() {
-    const[cards, setCards] = useState(initialcardsData);
+    const [cards, setCards] = useState(initialCardsData);
     const [searchQuery, setSearchQuery] = useState("");
+    const [newTitle, setNewTitle] = useState("");
+    const [newDescription, setNewDescription] = useState("");
+    const [sortOrder, setSortOrder] = useState("asc"); // 'asc' или 'desc'
 
-    const  sortCards = (order) => {
-        const sorted = [...cards].sort((a, b) => {
-            return order === "asc"
-            ? a.title.localeCompare(b.title)
-            : b.title.localeCompare(a.title);
+    // Фильтрация карт по названию
+    const filteredCards = cards
+        .filter((card) => card.title.toLowerCase().includes(searchQuery.toLowerCase()))
+        .sort((a, b) => {
+            if (sortOrder === "asc") return a.title.localeCompare(b.title);
+            else return b.title.localeCompare(a.title);
         });
-        setCards(sorted);
-    };
 
-    const filteredCards = cards.filter((card) =>
-        card.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // Добавление новой карты
+    const addCard = () => {
+        if (newTitle.trim() === "" || newDescription.trim() === "") return;
+
+        const newCard = {
+            id: cards.length + 1,
+            title: newTitle,
+            description: newDescription,
+        };
+
+        setCards([...cards, newCard]);
+        setNewTitle("");
+        setNewDescription("");
+    };
 
     return (
         <div>
             <h2>Список карт</h2>
 
+            {/* Поле поиска */}
             <input
                 type="text"
                 placeholder="Поиск по названию..."
@@ -34,13 +49,33 @@ function CardLibrary() {
                 onChange={(e) => setSearchQuery(e.target.value)}
             />
 
-            <button onClick={() => sortCards("asc")}>Сортировать A-Z</button>
-            <button onClick={() => sortCards("desc")}>Сортировать Z-А</button>
+            {/* Кнопки сортировки */}
+            <div>
+                <button onClick={() => setSortOrder("asc")}>Сортировать A-Z</button>
+                <button onClick={() => setSortOrder("desc")}>Сортировать Z-A</button>
+            </div>
 
+            {/* Форма добавления карт */}
+            <h3>Добавить новую карту</h3>
+            <input
+                type="text"
+                placeholder="Название карты"
+                value={newTitle}
+                onChange={(e) => setNewTitle(e.target.value)}
+            />
+            <input
+                type="text"
+                placeholder="Описание карты"
+                value={newDescription}
+                onChange={(e) => setNewDescription(e.target.value)}
+            />
+            <button onClick={addCard}>Добавить</button>
+
+            {/* Отображение карт */}
             <div className="card-container">
-                {filteredCards.length > 0 ?(
+                {filteredCards.length > 0 ? (
                     filteredCards.map((card) => (
-                        <Card key={card.id} title={card.title} description={card.description}/>
+                        <Card key={card.id} title={card.title} description={card.description} />
                     ))
                 ) : (
                     <p>Карты не найдены</p>

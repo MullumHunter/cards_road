@@ -9,24 +9,26 @@
 
 .card-container{
     display: flex;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 button{
-    margin: 10px;
+    margin-bottom: 20px;
     padding: 8px 12px;
     cursor: pointer;
     border: none;
-    background-color: #007bff;
+    background-color: #4CAF50;
     color: white;
     border-right: 4px;
 }
 button:hover {
-    background-color: #0056b3;
+    background-color: #45a049;
 }
 input {
-    margin: 10px;
+    display: block;
+    margin: 10px 0;
     padding: 8px;
-    width: 200px;
+    width: 250px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
