@@ -32,3 +32,15 @@ input {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+.delete-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.delete-btn:hover {
+    background-color: #cc0000;
+}

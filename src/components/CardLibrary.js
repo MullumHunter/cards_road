@@ -1,7 +1,7 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useContext} from "react";
 import Card from "./Card";
-// import cardsData from "../data/cardsData";
 import { CardContext} from "../context/CardContext";
+import cardsData from "../data/cardsData";
 
 function CardLibrary() {
     const {cards, setCards} = useContext(CardContext);
@@ -33,6 +33,15 @@ function CardLibrary() {
         setNewTitle("");
         setNewDescription("");
     };
+
+    // Удаление карты (только если её нет в cardsData.js)
+    const removeCard = (id) => {
+        const isInitialCard = cardsData.some((card) => card.id === id);
+        if (isInitialCard) return; // Если карта из cardsData.js, не удаляем
+
+        setCards(cards.filter((card) => card.id !== id));
+    };
+
 
     return (
         <div>
@@ -72,7 +81,12 @@ function CardLibrary() {
             <div className="card-container">
                 {filteredCards.length > 0 ? (
                     filteredCards.map((card) => (
-                        <Card key={card.id} title={card.title} description={card.description} />
+                        <Card key={card.id}
+                              title={card.title}
+                              description={card.description}
+                              onRemove={() => removeCard(card.id)}
+                              isRemovable={!cardsData.some((c) => c.id === card.id)}
+                        />
                     ))
                 ) : (
                     <p>Карты не найдены</p>
