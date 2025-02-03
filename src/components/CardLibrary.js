@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import Card from "./Card";
-
-const initialCardsData = [
-    { id: 1, title: "Рыцарь", description: "Храбрый воин в доспехах" },
-    { id: 2, title: "Маг", description: "Мастер магии и чар" },
-    { id: 3, title: "Разбойник", description: "Теневой мастер ловкости" },
-];
+import cardsData from "../data/cardsData";
 
 function CardLibrary() {
-    const [cards, setCards] = useState(initialCardsData);
+    const [cards, setCards] = useState(cardsData);
     const [searchQuery, setSearchQuery] = useState("");
     const [newTitle, setNewTitle] = useState("");
     const [newDescription, setNewDescription] = useState("");
