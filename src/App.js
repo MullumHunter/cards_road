@@ -1,12 +1,13 @@
 import React from "react";
+import { CardProvider} from "./context/CardContext";
 import CardLibrary from "./components/CardLibrary";
 
 function App() {
     return (
-        <div>
+        <CardProvider>
             <h1>Библиотека карт</h1>
             <CardLibrary />
-        </div>
+        </CardProvider>
     );
 }
 
