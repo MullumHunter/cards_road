@@ -2,6 +2,7 @@ import React, {useState, useContext} from "react";
 import Card from "./Card";
 import { CardContext} from "../context/CardContext";
 import cardsData from "../data/cardsData";
+import CatalogsList from "./CatalogsList";
 
 function CardLibrary() {
     const {cards, setCards} = useContext(CardContext);
@@ -45,7 +46,7 @@ function CardLibrary() {
 
     return (
         <div>
-            <h2>Список карт</h2>
+            <h2>Базовый каталог</h2>
 
             {/* Поле поиска */}
             <input
@@ -78,20 +79,31 @@ function CardLibrary() {
             <button onClick={addCard}>Добавить</button>
 
             {/* Отображение карт */}
+            {/*<div className="card-container">*/}
+            {/*    {filteredCards.length > 0 ? (*/}
+            {/*        filteredCards.map((card) => (*/}
+            {/*            <Card key={card.id}*/}
+            {/*                  title={card.title}*/}
+            {/*                  description={card.description}*/}
+            {/*                  onRemove={() => removeCard(card.id)}*/}
+            {/*                  isRemovable={!cardsData.some((c) => c.id === card.id)}*/}
+            {/*            />*/}
+            {/*        ))*/}
+            {/*    ) : (*/}
+            {/*        <p>Карты не найдены</p>*/}
+            {/*    )}*/}
+            {/*</div>*/}
             <div className="card-container">
-                {filteredCards.length > 0 ? (
-                    filteredCards.map((card) => (
-                        <Card key={card.id}
-                              title={card.title}
-                              description={card.description}
-                              onRemove={() => removeCard(card.id)}
-                              isRemovable={!cardsData.some((c) => c.id === card.id)}
-                        />
-                    ))
-                ) : (
-                    <p>Карты не найдены</p>
-                )}
+                {filteredCards.map((card) => (
+                    <Card key={card.id}
+                          title={card.title}
+                          description={card.description}
+                          onRemove={() => removeCard(card.id)}
+                          isRemovable={!cardsData.some((c) => c.id === card.id)}
+                    />
+                ))}
             </div>
+
         </div>
     );
 }

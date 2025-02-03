@@ -9,17 +9,44 @@ export function CardProvider({ children }) {
         return savedCards ? JSON.parse(savedCards) : cardsData;
     });
 
-    // Автоматически сохраняем в localStorage при изменении
+    const [catalogs, setCatalogs] = useState(() => {
+        const savedCatalogs = localStorage.getItem("catalogs");
+        return savedCatalogs ? JSON.stringify(cards) : {};
+    });
+
+    // // Автоматически сохраняем в localStorage при изменении
+    // useEffect(() => {
+    //     const savedCards = localStorage.getItem("cards");
+    //     if (!savedCards) {
+    //         localStorage.setItem("cards", JSON.stringify(cards));
+    //     }
+    // }, []);
+
     useEffect(() => {
-        const savedCards = localStorage.getItem("cards");
-        if (!savedCards) {
-            localStorage.setItem("cards", JSON.stringify(cards));
-        }
-    }, []);
+        localStorage.setItem("cards", JSON.stringify(cards));
+    }, [cards]);
+
+    useEffect(() => {
+        localStorage.setItem("catalogs", JSON.stringify(catalogs));
+    }, [catalogs]);
+
+    const addCatalog = (name) => {
+        if (!name.trim() || catalogs[name]) return;
+        setCatalogs((prev) => ({ ...prev, [name]: [] }));
+    };
+
+    const removeCatalog = (name) => {
+        if (name === "Базовый каталог") return;
+        setCatalogs((prev) => {
+            const newCatalogs = { ...prev };
+            delete newCatalogs[name];
+            return newCatalogs;
+        });
+    };
 
     return (
-        <CardContext.Provider value={{cards, setCards}}>
-            {children} {/* Доступ к данным для всех компонентов */}
+        <CardContext.Provider value={{ cards, setCards, catalogs, addCatalog, removeCatalog }}>
+            {children}
         </CardContext.Provider>
     );
 }
