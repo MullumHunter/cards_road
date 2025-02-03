@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import cardsData from "../data/cardsData";
 
 function CardLibrary() {
-    const [cards, setCards] = useState(cardsData);
+    const [cards, setCards] = useState(() => {
+        // Загружаем данные из localStorage при запуске
+        const savedCards = localStorage.getItem("cards");
+        return savedCards ? JSON.parse(savedCards) : cardsData;
+    });
+    // const [cards, setCards] = useState(cardsData);
     const [searchQuery, setSearchQuery] = useState("");
     const [newTitle, setNewTitle] = useState("");
     const [newDescription, setNewDescription] = useState("");
     const [sortOrder, setSortOrder] = useState("asc"); // 'asc' или 'desc'
+
+    useEffect(() =>
+        localStorage.setItem("cards", JSON.stringify(cards)),
+    )
 
     // Фильтрация карт по названию
     const filteredCards = cards
