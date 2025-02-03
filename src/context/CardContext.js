@@ -11,12 +11,15 @@ export function CardProvider({ children }) {
 
     // Автоматически сохраняем в localStorage при изменении
     useEffect(() => {
-        localStorage.setItem("cards", JSON.stringify(cards));
-    }, [cards]);
+        const savedCards = localStorage.getItem("cards");
+        if (!savedCards) {
+            localStorage.setItem("cards", JSON.stringify(cards));
+        }
+    }, []);
 
     return (
         <CardContext.Provider value={{cards, setCards}}>
             {children} {/* Доступ к данным для всех компонентов */}
         </CardContext.Provider>
-    )
+    );
 }
