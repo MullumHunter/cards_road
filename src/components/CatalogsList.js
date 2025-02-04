@@ -3,9 +3,15 @@ import {CardContext} from "../context/CardContext";
 import CatalogView from "./CatalogView";
 
 function CatalogsList() {
-    const { catalogs } = useContext(CardContext);
-    const [selectedCatalog, setSelectedCatalog] = useState(null);
+    const { catalogs, addCatalog } = useContext(CardContext);
+    const [newCatalogName, setNewCatalogName] = useState("");
     const [isCatalogOpen, setIsCatalogOpen] = useState(false);
+
+    const handleCreateCatalog = () => {
+        if (!newCatalogName.trim()) return;
+        addCatalog(newCatalogName);
+        setNewCatalogName("");
+    }
 
     return (
         <div>
@@ -15,8 +21,18 @@ function CatalogsList() {
                 {isCatalogOpen ? "Закрыть каталог" : "Открыть базовый каталог"}
             </button>
 
-            {/* Отображаем выбранный каталог */}
-            {isCatalogOpen && <CatalogView name="Базовый каталог" cards={catalogs["Базовый каталог"]} />}
+            {isCatalogOpen && <CatalogView name="Базовый каталог" cards={catalogs["Базовый каталог"]}/>}
+
+            <div>
+                <input
+                    type="text"
+                    placeholder="Введите название каталога"
+                    value={newCatalogName}
+                    onChange={(e) => setNewCatalogName(e.target.value)}
+                />
+                <button onClick={handleCreateCatalog}>Создать каталог</button>
+            </div>
+
         </div>
     );
 }
