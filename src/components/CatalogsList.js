@@ -5,22 +5,20 @@ import CatalogView from "./CatalogView";
 function CatalogsList() {
     const { catalogs } = useContext(CardContext);
     const [selectedCatalog, setSelectedCatalog] = useState(null);
+    const [isCatalogOpen, setIsCatalogOpen] = useState(false);
 
     return (
         <div>
             <h2>Каталоги</h2>
 
-            {/* Кнопка для открытия базового каталога */}
-            <button onClick={() => setSelectedCatalog("Базовый каталог")}>
-                Открыть базовый каталог
+            <button onClick={() => setIsCatalogOpen(!isCatalogOpen)}>
+                {isCatalogOpen ? "Закрыть каталог" : "Открыть базовый каталог"}
             </button>
 
             {/* Отображаем выбранный каталог */}
-            {selectedCatalog && (
-                <CatalogView name={selectedCatalog} cards={catalogs[selectedCatalog]} />
-            )}
+            {isCatalogOpen && <CatalogView name="Базовый каталог" cards={catalogs["Базовый каталог"]} />}
         </div>
     );
 }
 
-export  default CatalogsList;
+export default CatalogsList;
