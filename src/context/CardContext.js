@@ -11,16 +11,12 @@ export function CardProvider({ children }) {
 
     const [catalogs, setCatalogs] = useState(() => {
         const savedCatalogs = localStorage.getItem("catalogs");
-        return savedCatalogs ? JSON.stringify(cards) : {};
-    });
+        const parsedCatalogs = savedCatalogs ? JSON.parse(savedCatalogs) : null;
 
-    // // Автоматически сохраняем в localStorage при изменении
-    // useEffect(() => {
-    //     const savedCards = localStorage.getItem("cards");
-    //     if (!savedCards) {
-    //         localStorage.setItem("cards", JSON.stringify(cards));
-    //     }
-    // }, []);
+        return parsedCatalogs && parsedCatalogs["Базовый каталог"]
+            ? parsedCatalogs
+            : { "Базовый каталог": [...cardsData] };
+    });
 
     useEffect(() => {
         localStorage.setItem("cards", JSON.stringify(cards));
