@@ -5,7 +5,7 @@ import CatalogView from "./CatalogView";
 function CatalogsList() {
     const { catalogs, addCatalog } = useContext(CardContext);
     const [newCatalogName, setNewCatalogName] = useState("");
-    const [isCatalogOpen, setIsCatalogOpen] = useState(false);
+    const [openCatalog, setOpenCatalog] = useState(null); // Какой каталог открыт
 
     const handleCreateCatalog = () => {
         if (!newCatalogName.trim()) return;
@@ -17,12 +17,7 @@ function CatalogsList() {
         <div>
             <h2>Каталоги</h2>
 
-            <button onClick={() => setIsCatalogOpen(!isCatalogOpen)}>
-                {isCatalogOpen ? "Закрыть каталог" : "Открыть базовый каталог"}
-            </button>
-
-            {isCatalogOpen && <CatalogView name="Базовый каталог" cards={catalogs["Базовый каталог"]}/>}
-
+            {/* Поле ввода и кнопка создания каталога */}
             <div>
                 <input
                     type="text"
@@ -33,6 +28,21 @@ function CatalogsList() {
                 <button onClick={handleCreateCatalog}>Создать каталог</button>
             </div>
 
+            {/* Кнопки для всех каталогов */}
+            <div>
+                {Object.keys(catalogs).map((catalogName) => (
+                    <div key={catalogName}>
+                        <button onClick={() => setOpenCatalog(openCatalog === catalogName ? null : catalogName)}>
+                            {openCatalog === catalogName ? `Закрыть ${catalogName}` : `Открыть ${catalogName}`}
+                        </button>
+
+                        {/* Отображение каталога при нажатии */}
+                        {openCatalog === catalogName && (
+                            <CatalogView name={catalogName} cards={catalogs[catalogName]} />
+                        )}
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
