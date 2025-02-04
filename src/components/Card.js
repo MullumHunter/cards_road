@@ -1,15 +1,18 @@
 import React, {useContext, useState} from "react";
 import { CardContext } from "../context/CardContext";
 
-function Card({ title, description, onRemove, isRemovable}) {
+function Card({id, title, description, onRemove, isRemovable}) {
     const { catalogs, setCatalogs}  = useContext(CardContext);
     const [selectedCatalog, setSelectedCatalog] = useState("");
 
     const handleAddToCatalog = () => {
         if (!selectedCatalog || !catalogs[selectedCatalog]) return;
 
+        const isCardExists = catalogs[selectedCatalog].some((card) => card.id === id);
+        if (isCardExists) return;
+
         setCatalogs((prevCatalogs) => ({
-            ...prevCatalogs, [selectedCatalog]:[...prevCatalogs[selectedCatalog], {title, description}],
+            ...prevCatalogs, [selectedCatalog]:[...prevCatalogs[selectedCatalog], {id, title, description}],
         }));
     };
 
@@ -34,7 +37,6 @@ function Card({ title, description, onRemove, isRemovable}) {
                 </button>
             </div>
         </div>
-
 );
 }
 

@@ -8,7 +8,7 @@ function CatalogView({ name, cards, onRemoveCatalog}) {
             <div className="card-container">
                 {cards && cards.length > 0 ? (
                     cards.map((card) => (
-                        <Card key={card.id} title={card.title} description={card.description} />
+                        <Card key={card.id} id={card.id} title={card.title} description={card.description} />
                     ))
                 ) : (
                     <p>Каталог пуст</p>

@@ -41,7 +41,7 @@ export function CardProvider({ children }) {
     };
 
     return (
-        <CardContext.Provider value={{ cards, setCards, catalogs, addCatalog, removeCatalog }}>
+        <CardContext.Provider value={{ cards, setCards, catalogs, setCatalogs, addCatalog, removeCatalog }}>
             {children}
         </CardContext.Provider>
     );
