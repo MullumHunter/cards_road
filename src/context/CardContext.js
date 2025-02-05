@@ -4,15 +4,14 @@ import cardsData from "../data/cardsData"; // Начальные данные
 export const CardContext = createContext(); // Создаём контекст
 
 export function CardProvider({ children }) {
-    const [cards, setCards] = useState(() => {
+    const [cards, setCards] =
+        useState(() => {
         const savedCards = localStorage.getItem("cards");
-        return savedCards ? JSON.parse(savedCards) : cardsData;
-    });
+        return savedCards ? JSON.parse(savedCards) : cardsData;});
 
     const [catalogs, setCatalogs] = useState(() => {
         const savedCatalogs = localStorage.getItem("catalogs");
         const parsedCatalogs = savedCatalogs ? JSON.parse(savedCatalogs) : null;
-
         return parsedCatalogs && parsedCatalogs["Базовый каталог"]
             ? parsedCatalogs
             : { "Базовый каталог": [...cardsData] };

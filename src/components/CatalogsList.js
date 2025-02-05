@@ -3,13 +3,18 @@ import {CardContext} from "../context/CardContext";
 import CatalogView from "./CatalogView";
 
 function CatalogsList() {
-    const { catalogs, addCatalog } = useContext(CardContext);
+    const { catalogs, addCatalog, removeCatalog } = useContext(CardContext);
     const [newCatalogName, setNewCatalogName] = useState("");
     const [openCatalog, setOpenCatalog] = useState(null); // Какой каталог открыт
 
     const handleCreateCatalog = () => {
         if (!newCatalogName.trim()) return;
         addCatalog(newCatalogName);
+        setNewCatalogName("");
+    }
+    const handleDeleteCatalog = () => {
+        if (!newCatalogName.trim()) return;
+        removeCatalog(newCatalogName);
         setNewCatalogName("");
     }
 
@@ -26,6 +31,7 @@ function CatalogsList() {
                     onChange={(e) => setNewCatalogName(e.target.value)}
                 />
                 <button onClick={handleCreateCatalog}>Создать каталог</button>
+                <button onClick={handleDeleteCatalog}>Удалить каталог</button>
             </div>
 
             {/* Кнопки для всех каталогов */}
