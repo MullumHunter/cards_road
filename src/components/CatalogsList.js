@@ -5,9 +5,7 @@ import CatalogView from "./CatalogView";
 function CatalogsList() {
     const { catalogs, addCatalog, removeCatalog } = useContext(CardContext);
     const [newCatalogName, userCatalogName] = useState("");
-    const [openCatalog, setOpenCatalog] = useState(null); // Какой каталог открыт
-
-
+    const [openCatalog, setOpenCatalog] = useState(null);
 
     const handleCreateCatalog = () => {
         if (!newCatalogName.trim()) return;

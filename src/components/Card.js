@@ -37,7 +37,7 @@ function Card({id, title, description, onRemove, isRemovable}) {
                 </button>
             </div>
         </div>
-);
+    );
 }
 
 export default Card;
