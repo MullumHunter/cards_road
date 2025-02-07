@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import cardsData from "../data/cardsData"; // Начальные данные
 
-export const CardContext = createContext(); // Создаём контекст
+export const CardContext = createContext(null);
 
 export function CardProvider({ children }) {
     const [cards, setCards] =

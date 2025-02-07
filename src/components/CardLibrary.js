@@ -2,7 +2,6 @@ import React, {useState, useContext} from "react";
 import Card from "./Card";
 import { CardContext} from "../context/CardContext";
 import cardsData from "../data/cardsData";
-import CatalogsList from "./CatalogsList";
 
 function CardLibrary() {
     const {cards, setCards} = useContext(CardContext);
@@ -12,7 +11,6 @@ function CardLibrary() {
     const [newDescription, setNewDescription] = useState("");
     const [sortOrder, setSortOrder] = useState("asc"); // 'asc' или 'desc'
 
-    // Фильтрация карт по названию
     const filteredCards = cards
         .filter((card) => card.title.toLowerCase().includes(searchQuery.toLowerCase()))
         .sort((a, b) => {
@@ -20,7 +18,6 @@ function CardLibrary() {
             else return b.title.localeCompare(a.title);
         });
 
-    // Добавление новой карты
     const addCard = () => {
         if (newTitle.trim() === "" || newDescription.trim() === "") return;
 
@@ -30,19 +27,16 @@ function CardLibrary() {
             description: newDescription,
         };
 
-        setCards([...cards, newCard]);
         setNewTitle("");
         setNewDescription("");
+        setCards([...cards, newCard]);
     };
 
-    // Удаление карты (только если её нет в cardsData.js)
     const removeCard = (id) => {
         const isInitialCard = cardsData.some((card) => card.id === id);
-        if (isInitialCard) return; // Если карта из cardsData.js, не удаляем
-
+        if (isInitialCard) return;
         setCards(cards.filter((card) => card.id !== id));
     };
-
 
     return (
         <div>
@@ -77,22 +71,6 @@ function CardLibrary() {
                 onChange={(e) => setNewDescription(e.target.value)}
             />
             <button onClick={addCard}>Добавить</button>
-
-            {/* Отображение карт */}
-            {/*<div className="card-container">*/}
-            {/*    {filteredCards.length > 0 ? (*/}
-            {/*        filteredCards.map((card) => (*/}
-            {/*            <Card key={card.id}*/}
-            {/*                  title={card.title}*/}
-            {/*                  description={card.description}*/}
-            {/*                  onRemove={() => removeCard(card.id)}*/}
-            {/*                  isRemovable={!cardsData.some((c) => c.id === card.id)}*/}
-            {/*            />*/}
-            {/*        ))*/}
-            {/*    ) : (*/}
-            {/*        <p>Карты не найдены</p>*/}
-            {/*    )}*/}
-            {/*</div>*/}
             <div className="card-container">
                 {filteredCards.map((card) => (
                     <Card key={card.id}

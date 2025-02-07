@@ -4,37 +4,37 @@ import CatalogView from "./CatalogView";
 
 function CatalogsList() {
     const { catalogs, addCatalog, removeCatalog } = useContext(CardContext);
-    const [newCatalogName, setNewCatalogName] = useState("");
+    const [newCatalogName, userCatalogName] = useState("");
     const [openCatalog, setOpenCatalog] = useState(null); // Какой каталог открыт
+
+
 
     const handleCreateCatalog = () => {
         if (!newCatalogName.trim()) return;
         addCatalog(newCatalogName);
-        setNewCatalogName("");
+        userCatalogName("");
     }
     const handleDeleteCatalog = () => {
         if (!newCatalogName.trim()) return;
         removeCatalog(newCatalogName);
-        setNewCatalogName("");
+        userCatalogName("");
     }
 
     return (
         <div>
             <h2>Каталоги</h2>
 
-            {/* Поле ввода и кнопка создания каталога */}
             <div>
                 <input
                     type="text"
                     placeholder="Введите название каталога"
                     value={newCatalogName}
-                    onChange={(e) => setNewCatalogName(e.target.value)}
+                    onChange={(e) => userCatalogName(e.target.value)}
                 />
                 <button onClick={handleCreateCatalog}>Создать каталог</button>
                 <button onClick={handleDeleteCatalog}>Удалить каталог</button>
             </div>
 
-            {/* Кнопки для всех каталогов */}
             <div>
                 {Object.keys(catalogs).map((catalogName) => (
                     <div key={catalogName}>
@@ -42,7 +42,6 @@ function CatalogsList() {
                             {openCatalog === catalogName ? `Закрыть ${catalogName}` : `Открыть ${catalogName}`}
                         </button>
 
-                        {/* Отображение каталога при нажатии */}
                         {openCatalog === catalogName && (
                             <CatalogView name={catalogName} cards={catalogs[catalogName]} />
                         )}
